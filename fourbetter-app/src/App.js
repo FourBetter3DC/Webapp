@@ -7,6 +7,8 @@ import SavedWords from './pages/Savedwords';
 import Accountpage from './pages/Accountpage';
 import Settingpage from './pages/Settingpage';
 import Exercisepage from './pages/Exercises';
+import TestExercise from './components/ExerciseLayout';
+import TestChallenge from './components/ChallengeLayout';
 
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
           <Route path="/account" exact element={<Accountpage />}/>
           <Route path="/settings" exact element={<Settingpage/>}/>
           <Route path="/exercises" exact element={<Exercisepage />}/>
+          <Route path="/exercises/:textID" element={<TestExercise />}/>
+          <Route path="/exercises/:textID/challenges/:challengeNum" element={<TestChallenge />}/>
         </Routes>
     </div>
   );

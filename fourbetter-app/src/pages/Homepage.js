@@ -1,4 +1,6 @@
 import Navbar from "../components/Navbar";
+import { useState } from "react";
+import ReactDOM from 'react-dom/client';
 
 function Homepage() {
   return (
@@ -10,7 +12,7 @@ function Homepage() {
         </header>
         <main>
           <p>Welcome to the homepage</p>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/*Content goes here*/}</div>
         </main>
     </div>
   );
