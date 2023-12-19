@@ -6,6 +6,6 @@ module.exports = {
       colors: {'pink': '#FDEAFF'},
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/aspect-ratio'),],
 }
 

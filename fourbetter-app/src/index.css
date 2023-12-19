@@ -12,6 +12,23 @@ code {
     monospace;
 }
 
+/* CSS */
+.progress {
+  width: 100%;
+  background-color: #ddd; /* Color for the progress container */
+  border-radius: 4px;
+  height: 20px; /* Height of the progress container */
+}
+
+.progress-bar {
+  height: 100%; /* Full height of the progress bar */
+  background-color: #007bff; /* Color for the progress bar */
+  border-radius: 4px;
+  text-align: center;
+  color: white;
+  transition: width 0.5s ease; /* Optional: Add a smooth animation to the width change */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
