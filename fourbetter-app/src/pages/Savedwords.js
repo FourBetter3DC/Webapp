@@ -1,4 +1,7 @@
 import Navbar from "../components/Navbar";
+import SavedWordList from "../components/SavedWordList";
+import RetrieveWordDefinition from "../firebase/WordRetrieve";
+import AddWordForm from "../components/AddWordForm";
 
 function SavedWordspage() {
   return (
@@ -9,8 +12,7 @@ function SavedWordspage() {
           </div>
         </header>
         <main>
-          <p>Welcome to the saved words page.</p>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">{/* Your content */}</div>
+          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"><SavedWordList /></div>
         </main>
     </div>
   );
