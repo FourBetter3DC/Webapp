@@ -16,7 +16,7 @@ const products = [
     {
       id: 1,
       name: 'Little Hungry Caterpillar',
-      href: '/Exercises/1',
+      href: '/exercises/1',
       price: 'Level 1',
       imageSrc: 'https://cdn.kobo.com/book-images/9c5e4a71-0d13-4d12-85b1-9132cda74edd/1200/1200/False/the-very-hungry-caterpillar-and-other-stories-1.jpg',
       imageAlt: 'Little Hungry Caterpillar',
@@ -24,7 +24,7 @@ const products = [
     {
       id: 2,
       name: 'Narnia',
-      href: '/Exercises/2',
+      href: '/exercises/2',
       price: 'Level 3',
       imageSrc: 'https://m.media-amazon.com/images/I/71bNkuj4EbL._AC_UF894,1000_QL80_.jpg',
       imageAlt: 'Narnia',
@@ -32,7 +32,7 @@ const products = [
     {
       id: 3,
       name: 'James and the Giant Peach',
-      href: '#',
+      href: '/exercises/3',
       price: 'Level 2',
       imageSrc: 'https://marvel-b1-cdn.bc0a.com/f00000000212114/www.lmc.edu/_images/enews-article/james-giant-peach.jpg',
       imageAlt: 'James and the Giant Peach',
@@ -40,7 +40,7 @@ const products = [
     {
       id: 4,
       name: 'Stuart Little',
-      href: '#',
+      href: '/exercises/4',
       price: 'Level 2',
       imageSrc: 'https://images.justwatch.com/poster/182755778/s592/stuart-little-the-animated-series',
       imageAlt: 'Stuart Little',
