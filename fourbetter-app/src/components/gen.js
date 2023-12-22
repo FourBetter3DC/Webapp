@@ -12,12 +12,8 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 
 caller = function (type, instruction, content, temperatureV=1, topPV=0.5, topKV=20)
 
-usage format:
+usage format (inside async):
     gen.caller(2, response2, text)
-    .then((res) => {
-        output = res
-        // ... 
-    })
 
 
 Generating Questions:
@@ -26,7 +22,8 @@ gen.caller(
     <total number of questions : int> ,
     <text being used : str>
 )
-returns an array of the questions with their numbers (eg. "2. How did Mary's parents treat her when she was young?")
+returns an array of the questions with their numbers 
+(eg. "2. How did Mary's parents treat her when she was young?")
 
 
 Checking Answers:
@@ -59,9 +56,9 @@ module.exports.caller = function (type, instruction, content, temperatureV=0.5, 
     };
     const output = run(type, instruction, content, temperatureV, topPV, topKV)
     .then((res) => {
-        const output =  this.format(type, res)
-        return output;
-    })
+        this.format(type, res)
+        console.log('API Response Received')
+    });
     return output
 };
 
@@ -94,7 +91,7 @@ module.exports.format = function format(type, input) {
 
 
 // Genimi API handling
-function run(type, instruction, content, temperatureV, topPV, topKV) {
+async function run(type, instruction, content, temperatureV, topPV, topKV) {
 
     // input filtering, will trigger error and app crash
     if ( !(typeof temperatureV === 'number') || 
@@ -160,10 +157,11 @@ function run(type, instruction, content, temperatureV, topPV, topKV) {
 
 
     // execute model
-    return model.generateContent(textPrompt)
-    .then((res) => {
-        return res.response.text()
-    })
+    console.log('API Sending')
+    const result = await model.generateContent(textPrompt)
+    const output = result.response.text()
+    console.log(output)
+    return output
 }
 
 
