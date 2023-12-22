@@ -9,7 +9,6 @@ import Settingpage from './pages/Settingpage';
 import Exercisepage from './pages/Exercises';
 import Flashcard from './pages/flashcard';
 import Text from './pages/text';
-import Challenge from './pages/challenge';
 import Endingpage from './pages/endingpage';
 import TestExercise from './components/ExerciseLayout';
 import TestChallenge from './components/ChallengeLayout';
@@ -27,10 +26,9 @@ function App() {
           <Route path="/exercises" exact element={<Exercisepage />}/>
           <Route path="/flashcard" exact element={<Flashcard />}/>
           <Route path="/text" exact element={<Text/>}/>
-          <Route path="/challenge" exact element={<Challenge/>}/>
           <Route path="/endingpage" exact element={<Endingpage/>}/>
           <Route path="/exercises/:textID" element={<TestExercise />}/>
-          <Route path="/exercises/:textID/challenges/:challengeNum" element={<TestChallenge />}/>
+          <Route path="/exercises/:textID/challenges" element={<TestChallenge />}/>
         </Routes>
     </div>
   );
