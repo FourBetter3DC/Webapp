@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import LoginPage from './pages/LogIn';
 import Homepage from './pages/Homepage';
 import SavedWords from './pages/Savedwords';
-import Accountpage from './pages/Accountpage';
+import Accountpage from './pages/accountdeets';
 import Settingpage from './pages/Settingpage';
 import Exercisepage from './pages/Exercises';
 import Flashcard from './pages/flashcard';
@@ -12,8 +12,10 @@ import Text from './pages/text';
 import Endingpage from './pages/endingpage';
 import TestExercise from './components/ExerciseLayout';
 import TestChallenge from './components/ChallengeLayout';
+import Interim from './components/Interim';
 
 function App() {
+  
   return (
     <div>
       <p><Navbar /></p>
@@ -28,6 +30,7 @@ function App() {
           <Route path="/text" exact element={<Text/>}/>
           <Route path="/endingpage" exact element={<Endingpage/>}/>
           <Route path="/exercises/:textID" element={<TestExercise />}/>
+          <Route path="/exercises/:textID/loading" element={<Interim />}/>
           <Route path="/exercises/:textID/challenges" element={<TestChallenge />}/>
         </Routes>
     </div>

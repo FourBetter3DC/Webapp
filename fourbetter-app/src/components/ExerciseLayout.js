@@ -8,11 +8,18 @@ import raw3 from '../assets/stuartLittle.txt';
 const TextDisplay = () => {
     const [text, setText] = useState("");
     const TextID = useParams().textID;
-    var selected;
-    if (TextID == 1){selected=raw}
-    else if(TextID == 2){selected=raw1}
-    else if(TextID == 3){selected=raw2}
-    else{selected=raw3}
+    var selected, title;
+    if (TextID == 1){
+        selected=raw
+        title="The Little Hungry Caterpillar"}
+    else if(TextID == 2){
+        selected=raw1
+        title= "The Chronicles of Narnia"}
+    else if(TextID == 3){
+        selected=raw2
+        title = "James and the Giant Peach"}
+    else{selected=raw3
+        title = "Stuart Little"}
   
     useEffect(() => {
       fetch(selected)
@@ -29,30 +36,14 @@ const TextDisplay = () => {
           console.error('Error fetching the file:', error);
         });
     }, []);
-    console.log("The ID we want")
-    console.log(TextID);
-    console.log('/exercises/'+TextID+'/challenges/1')
-    return <div style={{ overflow: 'auto', height: 'calc(100% - 40px)' }}>{text}</div>;
+
+    return(<div style={{ overflow: 'auto', height: 'calc(100% - 40px)' }}>
+        <h1 align="center">{title}</h1>
+        <br/>
+        <p>{text}</p>
+        </div>);
   };
   
-
-/*function ExerLayout() {
-    const {textID} = useParams();
-    const text = {textID, textcontent:"whee this is all the content of the text", questions:["This is question 1","This is question 2","This is question 3."]};
-    return (
-        <div>The layout for text {textID} has been printed.
-            <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-            <p>{text.textcontent}</p>
-            <br/>
-            <br/>
-            <a href= {/exercises/+{textID}+/challenges/+1}>
-                <button>To Challenges Page</button>
-            </a>
-          </div>
-        </div>
-        
-    )
-}*/
 const ChatBot = ({ onClose }) => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -112,8 +103,8 @@ const ChatBot = ({ onClose }) => {
           alt="Hamster"
           style={{
             position: 'absolute',
-            top: '-50px', // Adjust the position of the image relative to the button
-            left: '1.6%', // Adjust the left position if needed
+            top: '0px', // Adjust the position of the image relative to the button
+            left: '-10%', // Adjust the left position if needed
             transform: 'translateX(-50%)', // Center the image horizontally
             width: '50px', // Adjust the width as needed
             height: 'auto', // Maintain aspect ratio
@@ -160,7 +151,7 @@ const ChatBot = ({ onClose }) => {
     return (
       <div style={containerStyle}>
         {<TextDisplay />}
-        <a href= {/exercises/+TextID+/challenges/}>
+        <a href= {`/exercises/${TextID}/loading`}>
         <button style={nextButtonStyle}>Challenge</button>
         </a>
         <HelpButton />

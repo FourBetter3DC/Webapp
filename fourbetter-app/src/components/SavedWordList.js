@@ -6,6 +6,7 @@ const savedWords = await WordRetrieve();
     return (
       <ul role="list" className="divide-y divide-gray-100">
         {savedWords.map((savedWord) => (
+          <a> {/*add href here */}
           <li key={savedWord.definitions} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
               <div className="min-w-0 flex-auto">
@@ -29,6 +30,7 @@ const savedWords = await WordRetrieve();
               )}
             </div>
           </li>
+          </a>
         ))}
       </ul>
     )

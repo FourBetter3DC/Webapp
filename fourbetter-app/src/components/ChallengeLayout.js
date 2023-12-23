@@ -1,87 +1,11 @@
 import { useParams } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import raw from '../assets/LHC.txt';
 import raw1 from '../assets/chroniclesOfNarnia.txt';
 import raw2 from '../assets/jamesAndTheGiantPeach.txt';
 import raw3 from '../assets/stuartLittle.txt';
 const gen = require('./gen.js');
 
-/*function ChallengeLayout(){
-    const {textID, challengeNum} = useParams();
-    const questions = ["This is question 1","This is question 2","This is question 3.", "This is question 4.", "This is question 5."];
-
-    console.log('TextID');
-    console.log(textID);
-    console.log("challengeNum");
-    console.log(challengeNum);
-    console.log(challengeNum == 1)
-
-    if(challengeNum == 1){
-    const nextchallengeNum = parseInt(challengeNum) + 1;
-    console.log(nextchallengeNum);
-    return (
-        <div>
-            <h2>This is the challenges layout number {challengeNum} for text {textID}</h2>
-            <p>Right now, all you can do is see the questions</p>
-            <br/>
-            {questions[challengeNum-1]}
-            <br />
-            <br />
-            <a href= {/exercises/+textID+/challenges/+nextchallengeNum}>
-                <button>Next question</button>
-            </a>
-            <br />
-            <a href= {/exercises/+textID}>
-                <button>Back to the Text Page</button>
-            </a>
-        </div>
-    )}
-    else if(challengeNum <= 4){
-        console.log('Im here now');
-        const prevchallengeNum = parseInt(challengeNum) - 1;
-        const nextchallengeNum = parseInt(challengeNum) + 1;
-        return(
-        <div>
-            <h2>This is the challenges layout number {challengeNum} for text {textID}</h2>
-            <p>Right now, all you can do is see the questions</p>
-            <br/>
-            {questions[challengeNum-1]}
-            <br/>
-            <br />
-            <a href= {/exercises/+textID+/challenges/+prevchallengeNum}>
-                <button>Previous question</button>
-            </a>
-            <br />
-            <a href= {/exercises/+textID+/challenges/+nextchallengeNum}>
-                <button>Next question</button>
-            </a>
-            <br />
-            <a href= {/exercises/+textID}>
-                <button>Back to the Text Page</button>
-            </a>
-        </div>)
-    }
-
-    else{
-        const prevchallengeNum = parseInt(challengeNum) - 1;
-        return(
-        <div>
-            <h2>This is the challenges layout number {challengeNum} for text {textID}</h2>
-            <p>Right now, all you can do is see the questions</p>
-            <br/>
-            {questions[challengeNum-1]}
-            <br />
-            <br />
-            <a href= {/exercises/+textID+/challenges/+prevchallengeNum}>
-                <button>Previous question</button>
-            </a>
-            <br />
-            <a href= {/exercises/+textID}>
-                <button>Back to the Text Page</button>
-            </a>
-        </div>
-    )}
-} */
 
 const ChatBot = ({ onClose }) => {
     const [messages, setMessages] = useState([]);
@@ -138,24 +62,15 @@ const ChatBot = ({ onClose }) => {
 
 
 
-const BoxComponent = () => {
+const BoxComponent = (questions) => {
+    questions = questions.stringify();
+    console.log("Questions received");
+    console.log(questions);
+    console.log(typeof(questions));
     const [currentPage, setCurrentPage] = useState(1);
     const [showChatBot, setShowChatBot] = useState(false);
 
     const {textID, challengeNum} = useParams();
-    var selected;
-    if (textID == 1){selected=raw}
-    else if(textID == 2){selected=raw1}
-    else if(textID == 3){selected=raw2}
-    else{selected=raw3}
-    fetch(selected)
-    .then((res) => {
-        selected = res.text
-    })
-    
-    const questions = gen.caller(1, 5, selected)
-    
-    
 
     const containerStyle = {
       display: 'flex',
@@ -206,7 +121,8 @@ const BoxComponent = () => {
 
 
     return (
-      <div style={containerStyle}>
+      <div>
+        {questions ? (<div style={containerStyle}>
         <div style={progressBarStyle}>
           {[...Array(5)].map((_, index) => (
             <div
@@ -318,6 +234,9 @@ const BoxComponent = () => {
   
         {/* ChatBot component */}
         {showChatBot && <ChatBot onClose={toggleChatBot} />}
+      </div>) : (
+          <p align="center">Loading...</p>
+          )}
       </div>
     );
 };

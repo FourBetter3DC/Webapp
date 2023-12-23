@@ -47,6 +47,7 @@ last 3 parameters are optional for config
 
 // caller and formatting function
 module.exports.caller = function (type, instruction, content, temperatureV=0.5, topPV=0.5, topKV=20) {
+    console.log("The formatting helper function was called. ")
     if (type == 2) {
         let tmp = ''
         for (let i = 0; i < instruction.length; i += 2) {
@@ -67,6 +68,7 @@ module.exports.caller = function (type, instruction, content, temperatureV=0.5, 
 
 // output formatting helper
 module.exports.format = function format(type, input) {
+    console.log("This function was also called in to help.")
     switch(type) {
         case 1: // extract just questions from Gemini response
             let qnMatch = /(\d[.] .+?)(?:\n)/gi;
@@ -76,6 +78,7 @@ module.exports.format = function format(type, input) {
                 allQn[i] = allQn[i][1]
             };
             var output = allQn
+            console.log(typeof(output));
             return output
         case 2:
             const anMatch = /correct/gi;
@@ -160,6 +163,7 @@ async function run(type, instruction, content, temperatureV, topPV, topKV) {
     console.log('API Sending')
     const result = await model.generateContent(textPrompt)
     const output = result.response.text()
+    console.log(typeof(output))
     console.log(output)
     return output
 }
