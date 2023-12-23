@@ -12,8 +12,12 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 
 caller = function (type, instruction, content, temperatureV=1, topPV=0.5, topKV=20)
 
-usage format (inside async):
+usage format:
     gen.caller(2, response2, text)
+    .then((res) => {
+        output = res
+        // ... 
+    })
 
 
 Generating Questions:
@@ -47,7 +51,6 @@ last 3 parameters are optional for config
 
 // caller and formatting function
 module.exports.caller = function (type, instruction, content, temperatureV=0.5, topPV=0.5, topKV=20) {
-    console.log("The formatting helper function was called. ")
     if (type == 2) {
         let tmp = ''
         for (let i = 0; i < instruction.length; i += 2) {
@@ -55,10 +58,10 @@ module.exports.caller = function (type, instruction, content, temperatureV=0.5, 
         }
         content = tmp.slice(0, -3)
     };
-    const output = run(type, instruction, content, temperatureV, topPV, topKV)
+    var output = run(type, instruction, content, temperatureV, topPV, topKV)
     .then((res) => {
-        this.format(type, res)
         console.log('API Response Received')
+        return res
     });
     return output
 };
@@ -67,8 +70,7 @@ module.exports.caller = function (type, instruction, content, temperatureV=0.5, 
 
 
 // output formatting helper
-module.exports.format = function format(type, input) {
-    console.log("This function was also called in to help.")
+function format(type, input) {
     switch(type) {
         case 1: // extract just questions from Gemini response
             let qnMatch = /(\d[.] .+?)(?:\n)/gi;
@@ -78,7 +80,6 @@ module.exports.format = function format(type, input) {
                 allQn[i] = allQn[i][1]
             };
             var output = allQn
-            console.log(typeof(output));
             return output
         case 2:
             const anMatch = /correct/gi;
@@ -160,12 +161,14 @@ async function run(type, instruction, content, temperatureV, topPV, topKV) {
 
 
     // execute model
-    console.log('API Sending')
-    const result = await model.generateContent(textPrompt)
-    const output = result.response.text()
+    console.log('API Sending');
+    const result = await model.generateContent(textPrompt);
+    const tmp1 = await result.response;
+    const tmp2 = await tmp1.text();
+    const output = await format(type, tmp2);
     console.log(typeof(output))
     console.log(output)
-    return output
+    return await output;
 }
 
 
