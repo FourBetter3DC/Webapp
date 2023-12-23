@@ -1,6 +1,10 @@
 import { useParams } from 'react-router-dom';
 import React, { useState } from 'react';
-
+import raw from '../assets/LHC.txt';
+import raw1 from '../assets/chroniclesOfNarnia.txt';
+import raw2 from '../assets/jamesAndTheGiantPeach.txt';
+import raw3 from '../assets/stuartLittle.txt';
+const gen = require('./gen.js');
 
 /*function ChallengeLayout(){
     const {textID, challengeNum} = useParams();
@@ -130,13 +134,29 @@ const ChatBot = ({ onClose }) => {
         </button>
       </div>
     );
-  };
-  
-  const BoxComponent = () => {
+};
+
+
+
+const BoxComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [showChatBot, setShowChatBot] = useState(false);
-    const questions = ["This is question 1.","This is question 2.","This is question 3.", "This is question 4.", "This is question 5."];
-  
+
+    const {textID, challengeNum} = useParams();
+    var selected;
+    if (textID == 1){selected=raw}
+    else if(textID == 2){selected=raw1}
+    else if(textID == 3){selected=raw2}
+    else{selected=raw3}
+    fetch(selected)
+    .then((res) => {
+        selected = res.text
+    })
+    
+    const questions = gen.caller(1, 5, selected)
+    
+    
+
     const containerStyle = {
       display: 'flex',
       flexDirection: 'column',
@@ -183,7 +203,8 @@ const ChatBot = ({ onClose }) => {
     const toggleChatBot = () => {
       setShowChatBot((prevState) => !prevState);
     };
-  
+
+
     return (
       <div style={containerStyle}>
         <div style={progressBarStyle}>
@@ -299,6 +320,6 @@ const ChatBot = ({ onClose }) => {
         {showChatBot && <ChatBot onClose={toggleChatBot} />}
       </div>
     );
-  };
+};
   
 export default BoxComponent;
