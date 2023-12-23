@@ -12,14 +12,15 @@ import Text from './pages/text';
 import Endingpage from './pages/endingpage';
 import TestExercise from './components/ExerciseLayout';
 import TestChallenge from './components/ChallengeLayout';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
     <div>
       <p><Navbar /></p>
         <Routes>
-          <Route path="/" exact element={<Homepage />}/>
-          <Route path="/login" exact element= {<LoginPage />}/>
+          <Route path="/homepage" exact element={<Homepage />}/>
+          <Route path="/" exact element= {<LoginPage />}/>
           <Route path="/savedwords" exact element={<SavedWords />}/>
           <Route path="/account" exact element={<Accountpage />}/>
           <Route path="/settings" exact element={<Settingpage/>}/>
@@ -29,6 +30,7 @@ function App() {
           <Route path="/endingpage" exact element={<Endingpage/>}/>
           <Route path="/exercises/:textID" element={<TestExercise />}/>
           <Route path="/exercises/:textID/challenges" element={<TestChallenge />}/>
+          <Route path="/SignUp" exact element={<SignUp/>}/>
         </Routes>
     </div>
   );

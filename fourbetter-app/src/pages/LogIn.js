@@ -12,7 +12,22 @@
   }
   ```
 */
+import { useState } from "react";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "@firebase/auth";
+import { auth } from "../firebase/FirebaseConfig";
+
 export default function Example() {
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const login = async () => {
+    try{
+      const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      console.log(user);
+    } catch(error) {
+      console.log(error.message);
+  }
+  };
+  
   return (
     <>
       {/*
@@ -47,6 +62,7 @@ export default function Example() {
                   name="username"
                   type="text"
                   autoComplete="username"
+                  onChange={(event) => {setLoginEmail(event.target.value);}}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -70,6 +86,7 @@ export default function Example() {
                   name="password"
                   type="password"
                   autoComplete="current-password"
+                  onChange={(event) => {setLoginPassword(event.target.value);}}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -79,16 +96,16 @@ export default function Example() {
             <div>
               <button
                 type="submit"
+                onClick={login}
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
             </div>
           </form>
-
           <p className="mt-10 text-center text-sm text-gray-500">
             Do not have an account?{' '}
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+            <a href="/SignUp" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
               Sign Up 
             </a>
           </p>
