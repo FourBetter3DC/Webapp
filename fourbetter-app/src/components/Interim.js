@@ -53,13 +53,13 @@ const ShowRefresh = (questions) =>{
     useEffect(()=>{
     setTimeout(()=>{
       setShowBtn(!showBtn);
-    },5000)
+    },6000)
     },[])
 
     return (
       <div>
         <Link to={`/exercises/${textID}/challenges`} questions={questions}>
-        {showBtn && <button> Refresh? </button>}
+        {showBtn && <button align="center"> Refresh? </button>}
         </Link>
       </div>
     )}
@@ -71,11 +71,17 @@ const Interim = (questions) =>{
         const fetchQuestionsFromApi = async () => {
           try {
             const response = await gen.caller(1,5,text);
+            console.log(typeof(response));
             const data = await response.json();
             console.log(data);
             console.log(typeof(data));
             console.log("Reloading page....");
             setQuestions(data);
+            return(<div>
+              <p>{questions}</p>
+              <p align="center">Loading...</p>
+              <ShowRefresh questions = {questions}/>
+              </div>)
           } catch (error) {
             console.error('Error fetching data:', error);
           }
@@ -83,12 +89,6 @@ const Interim = (questions) =>{
   
         fetchQuestionsFromApi();
       }, []);
-    return(
-        <div>
-          <p align="center">Loading...</p>
-          <ShowRefresh questions = {questions}/>
-        </div>
-    )
 }
 
 export default Interim;
