@@ -18,17 +18,18 @@ const text3 = fs.readFileSync(path3, 'utf8');
 const text4 = fs.readFileSync(path4, 'utf8');
 
 
+app.use(cors());
+app.use(bodyParser.json())
 
 app.use((req, res, next) => {
-  cors()
-  bodyParser.json()
   next()
 })
 
 // API endpoint
 app.post('/api', (req, res) => {
   console.log('API TRIGGERED');
-  console.log(req)
+  req.body
+  console.log(req.body)
   var output
   /* gen.caller( )
   .then((res) => {

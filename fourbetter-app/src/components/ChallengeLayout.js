@@ -72,8 +72,8 @@ const BoxComponent = () => {
       const apiAddress = 'http://localhost:3001/api';
       const data = new FormData();
       const payload = {
-        'content': TextID,
-        'type': '1'
+        content: TextID,
+        type: '1'
       };
       data.append( "json", JSON.stringify( payload ) )
 
@@ -84,13 +84,13 @@ const BoxComponent = () => {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json; charset=UTF-8'
             },
             body: data
           });
-          const data = await response.json();
+          const output = await response.json();
           // Handle the data here
-          console.log(data);
+          console.log(output);
         } catch (error) {
           console.error('Error fetching data:', error);
         }}
