@@ -151,7 +151,7 @@ const ChatBot = ({ onClose }) => {
     return (
       <div style={containerStyle}>
         {<TextDisplay />}
-        <a href= {`/exercises/${TextID}/loading`}>
+        <a href= {`/exercises/${TextID}/challenges`}>
         <button style={nextButtonStyle}>Challenge</button>
         </a>
         <HelpButton />

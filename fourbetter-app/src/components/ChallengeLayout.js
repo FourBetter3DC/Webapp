@@ -1,10 +1,5 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import raw from '../assets/LHC.txt';
-import raw1 from '../assets/chroniclesOfNarnia.txt';
-import raw2 from '../assets/jamesAndTheGiantPeach.txt';
-import raw3 from '../assets/stuartLittle.txt';
-const gen = require('./gen.js');
 
 
 const ChatBot = ({ onClose }) => {
@@ -23,7 +18,9 @@ const ChatBot = ({ onClose }) => {
         // Implement your chatbot logic here to handle user messages
       }
     };
-  
+
+
+    
     return (
       <div className="chatbot-popup" style={{ width: '300px', border: '1px solid #ccc', padding: '10px', position: 'fixed', bottom: '80px', right: '900px', backgroundColor: '#fff' }}>
         <h3>ChatBot</h3>
@@ -62,15 +59,40 @@ const ChatBot = ({ onClose }) => {
 
 
 
-const BoxComponent = (questions) => {
-    questions = questions.stringify();
-    console.log("Questions received");
-    console.log(questions);
-    console.log(typeof(questions));
+const BoxComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [showChatBot, setShowChatBot] = useState(false);
 
     const {textID, challengeNum} = useParams();
+    const TextID = useParams().textID;
+
+    const apiAddress = 'http://localhost:3001/api';
+    const body = new FormData();
+    body.append('content', TextID);
+    body.append('type', '1');
+    var questions
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          console.log('fetching')
+          const response = await fetch(apiAddress, {
+            method: 'POST',
+            body: JSON.stringify({
+              'content':TextID,
+              'type':1
+            })
+          });
+          const data = await response.json();
+          // Handle the data here
+          console.log(data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }}
+    
+      fetchData();
+    }, []);
+
+
 
     const containerStyle = {
       display: 'flex',
