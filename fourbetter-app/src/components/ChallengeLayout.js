@@ -72,8 +72,9 @@ const BoxComponent = () => {
 
       const apiAddress = 'http://localhost:3001/api';
       const payload = {
-        content: TextID,
-        type: '1'
+        type: 1, // prompt type
+        content: TextID, // ID of text
+        instruction: 5 // number of questions
       }
       const fetchData = async () => {
         try {

@@ -3,7 +3,6 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const gen = require('./components/gen.js')
 const cors = require('cors')
-const bodyParser = require('body-parser');
 
 
 const fs = require('fs');
@@ -17,21 +16,22 @@ const text2 = fs.readFileSync(path2, 'utf8');
 const text3 = fs.readFileSync(path3, 'utf8');
 const text4 = fs.readFileSync(path4, 'utf8');
 
-
+// config
 app.use(cors());
 app.use(express.json());
-/* 
-app.use((req, res, next) => {
-  next()
-})
- */
+
 // API endpoint
 app.post('/api', (req, res) => {
+  
+  // prep data
   console.log('API TRIGGERED');
   const text = eval(`text${req.body.content}`);
-  const type = Number(req.body.type);
+  const type = req.body.type;
+  const instruction = req.body.instruction;
   var output;
-  gen.caller(type, 5, text )
+
+  // Gemini API call
+  gen.caller(type, instruction, text )
   .then((res) => {
     output = res
   })
