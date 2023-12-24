@@ -19,24 +19,24 @@ const text4 = fs.readFileSync(path4, 'utf8');
 
 
 app.use(cors());
-app.use(bodyParser.json())
-
+app.use(express.json());
+/* 
 app.use((req, res, next) => {
   next()
 })
-
+ */
 // API endpoint
 app.post('/api', (req, res) => {
   console.log('API TRIGGERED');
-  req.body
-  console.log(req.body)
-  var output
-  /* gen.caller( )
+  const text = eval(`text${req.body.content}`);
+  const type = Number(req.body.type);
+  var output;
+  gen.caller(type, 5, text )
   .then((res) => {
     output = res
-  }) */
+  })
   setTimeout(() => {
-    res.send(output);
+    res.send(JSON.stringify({questions: output}));
   }, 5000);
 });
 

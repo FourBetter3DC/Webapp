@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import axios from'axios';
 
 
 const ChatBot = ({ onClose }) => {
@@ -70,27 +71,16 @@ const BoxComponent = () => {
     useEffect(() => {
 
       const apiAddress = 'http://localhost:3001/api';
-      const data = new FormData();
       const payload = {
         content: TextID,
         type: '1'
-      };
-      data.append( "json", JSON.stringify( payload ) )
-
+      }
       const fetchData = async () => {
         try {
-          console.log('fetching')
-          const response = await fetch(apiAddress, {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json; charset=UTF-8'
-            },
-            body: data
-          });
-          const output = await response.json();
-          // Handle the data here
-          console.log(output);
+          const response = await axios.post(`${apiAddress}`, payload)
+          questions = response.data
+          console.log(questions)
+          
         } catch (error) {
           console.error('Error fetching data:', error);
         }}
