@@ -66,21 +66,27 @@ const BoxComponent = () => {
     const {textID, challengeNum} = useParams();
     const TextID = useParams().textID;
 
-    const apiAddress = 'http://localhost:3001/api';
-    const body = new FormData();
-    body.append('content', TextID);
-    body.append('type', '1');
     var questions
     useEffect(() => {
+
+      const apiAddress = 'http://localhost:3001/api';
+      const data = new FormData();
+      const payload = {
+        'content': TextID,
+        'type': '1'
+      };
+      data.append( "json", JSON.stringify( payload ) )
+
       const fetchData = async () => {
         try {
           console.log('fetching')
           const response = await fetch(apiAddress, {
             method: 'POST',
-            body: JSON.stringify({
-              'content':TextID,
-              'type':1
-            })
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: data
           });
           const data = await response.json();
           // Handle the data here

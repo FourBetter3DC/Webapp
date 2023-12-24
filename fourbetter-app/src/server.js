@@ -3,6 +3,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const gen = require('./components/gen.js')
 const cors = require('cors')
+const bodyParser = require('body-parser');
 
 
 const fs = require('fs');
@@ -18,12 +19,16 @@ const text4 = fs.readFileSync(path4, 'utf8');
 
 
 
-app.use(cors())
+app.use((req, res, next) => {
+  cors()
+  bodyParser.json()
+  next()
+})
 
 // API endpoint
 app.post('/api', (req, res) => {
   console.log('API TRIGGERED');
-  console.log(req.body)
+  console.log(req)
   var output
   /* gen.caller( )
   .then((res) => {
