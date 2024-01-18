@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from'axios';
+import { useQuery } from '@tanstack/react-query'
 
 
 const ChatBot = ({ onClose }) => {
@@ -67,9 +68,34 @@ const BoxComponent = () => {
     const {textID, challengeNum} = useParams();
     const TextID = useParams().textID;
 
-    var questions
-    useEffect(() => {
 
+    const apiAddress = 'http://localhost:3001/api';
+    const payload = {
+      type: 1, // prompt type
+      content: TextID, // ID of text
+      instruction: 5 // number of questions
+    };
+    const { data, isLoading, isError } = useQuery({
+      queryKey: ['questions'],
+      queryFn: async () => {
+        const { data } = await axios.post(`${apiAddress}`, payload);
+        return data.questions;
+      }
+    });
+
+    // function questions(index) {
+    //   if (fetchQuestions.isLoading) return <h1>Loading...</h1>
+    //   if (fetchQuestions.isError) return <h1>Error fetching...</h1>
+    //   return (
+    //     <div>
+    //       {fetchQuestions.data[index-1]}
+    //     </div>
+    //   )
+    // };
+
+
+/*     const [questions, setQuestions] = useState([]);
+    useEffect(() => {
       const apiAddress = 'http://localhost:3001/api';
       const payload = {
         type: 1, // prompt type
@@ -79,15 +105,16 @@ const BoxComponent = () => {
       const fetchData = async () => {
         try {
           const response = await axios.post(`${apiAddress}`, payload)
-          questions = response.data
-          console.log(questions)
+          let qns = response.data
+          setQuestions(qns)
+          console.log(qns)
           
         } catch (error) {
           console.error('Error fetching data:', error);
         }}
     
       fetchData();
-    }, []);
+    }, []); */
 
 
 
@@ -141,26 +168,27 @@ const BoxComponent = () => {
 
     return (
       <div>
-        {questions ? (<div style={containerStyle}>
-        <div style={progressBarStyle}>
-          {[...Array(5)].map((_, index) => (
-            <div
-              key={index}
-              style={{
-                ...dotStyle,
-                ...(currentPage === index + 1 ? activeDotStyle : {}),
-              }}
-              onClick={() => handlePageChange(index + 1)}
-            />
-          ))}
-        </div>
-  
-        {/* Text and Text box for each page */}
-        {currentPage === 1 && (
+        <div style={containerStyle}>
+          <div style={progressBarStyle}>
+            {[...Array(5)].map((_, index) => (
+              <div
+                key={index}
+                style={{
+                  ...dotStyle,
+                  ...(currentPage === index + 1 ? activeDotStyle : {}),
+                }}
+                onClick={() => handlePageChange(index + 1)}
+              />
+            ))}
+          </div>
+    
+          {/* questions component */}
           <React.Fragment>
             <br/>
             <div style={{ overflow: 'auto', height: 'calc(50% - 40px)' }}>
-              {questions[0]}
+              {isLoading && <h1>Loading...</h1>}
+              {isError && <h1>Error</h1>}
+              {data && data[currentPage - 1]}
             </div>
             <div style={{ overflow: 'auto', height: 'calc(50% - 50px)', display: 'flex', alignItems: 'center' }}>
               <input
@@ -170,94 +198,31 @@ const BoxComponent = () => {
               />
             </div>
           </React.Fragment>
-        )}
-        {currentPage === 2 && (
-          <React.Fragment>
-            <br/>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 40px)' }}>
-              {questions[1]}
-            </div>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 50px)', display: 'flex', alignItems: 'center' }}>
-              <input
-                type="text"
-                placeholder="Type something..."
-                style={{ width: '100%', padding: '10px', fontSize: '16px' }}
-              />
-            </div>
-          </React.Fragment>
-        )}
-        {currentPage === 3 && (
-          <React.Fragment>
-            <br/>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 40px)' }}>
-              {questions[2]}
-            </div>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 50px)', display: 'flex', alignItems: 'center' }}>
-              <input
-                type="text"
-                placeholder="Type something..."
-                style={{ width: '100%', padding: '10px', fontSize: '16px' }}
-              />
-            </div>
-          </React.Fragment>
-        )}
-        {currentPage === 4 && (
-          <React.Fragment>
-            <br/>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 40px)' }}>
-              {questions[3]}
-            </div>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 50px)', display: 'flex', alignItems: 'center' }}>
-              <input
-                type="text"
-                placeholder="Type something..."
-                style={{ width: '100%', padding: '10px', fontSize: '16px' }}
-              />
-            </div>
-          </React.Fragment>
-        )}
-        {currentPage === 5 && (
-          <React.Fragment>
-            <br/>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 40px)' }}>
-              {questions[4]}
-            </div>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 50px)', display: 'flex', alignItems: 'center' }}>
-              <input
-                type="text"
-                placeholder="Type something..."
-                style={{ width: '100%', padding: '10px', fontSize: '16px' }}
-              />
-            </div>
-          </React.Fragment>
-        )}
-  
-        {/* Help button */}
-        <HelpButton onClick={toggleChatBot} />
-  
-        {/* Hamster image */}
-        <img
-          src="https://i0.wp.com/www.followchain.org/wp-content/uploads/2023/05/icons8-cute-hamster-330.png?w=50&ssl=1"
-          alt="Hamster"
-          style={{
-            position: 'fixed',
-            bottom: '35px',
-            left: '12.5px',
-            width: '50px',
-            height: 'auto',
-          }}
-        />
+    
+          {/* Help button */}
+          <HelpButton onClick={toggleChatBot} />
+    
+          {/* Hamster image */}
+          <img
+            src="https://i0.wp.com/www.followchain.org/wp-content/uploads/2023/05/icons8-cute-hamster-330.png?w=50&ssl=1"
+            alt="Hamster"
+            style={{
+              position: 'fixed',
+              bottom: '35px',
+              left: '12.5px',
+              width: '50px',
+              height: 'auto',
+            }}
+          />
 
-        {/* Next button */}
-        <button style={{ position: 'fixed', bottom: '10px', right: '10px', padding: '5px 10px', border: '1px solid #000', cursor: 'pointer' }} onClick={handleNext}>Next</button>
-  
-        {/* ChatBot component */}
-        {showChatBot && <ChatBot onClose={toggleChatBot} />}
-      </div>) : (
-          <p align="center">Loading...</p>
-          )}
+          {/* Next button */}
+          <button style={{ position: 'fixed', bottom: '10px', right: '10px', padding: '5px 10px', border: '1px solid #000', cursor: 'pointer' }} onClick={handleNext}>Next</button>
+    
+          {/* ChatBot component */}
+          {showChatBot && <ChatBot onClose={toggleChatBot} />}
+        </div>
       </div>
     );
 };
-  
+
 export default BoxComponent;
