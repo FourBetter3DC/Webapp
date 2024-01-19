@@ -70,52 +70,40 @@ const BoxComponent = () => {
 
 
     const apiAddress = 'http://localhost:3001/api';
-    const payload = {
+    const payload1 = {
       type: 1, // prompt type
       content: TextID, // ID of text
       instruction: 5 // number of questions
     };
-    const { data, isLoading, isError } = useQuery({
+    const questionQuery = useQuery({
       queryKey: ['questions'],
       queryFn: async () => {
-        const { data } = await axios.post(`${apiAddress}`, payload);
+        const { data } = await axios.post(`${apiAddress}`, payload1)
         return data.questions;
       }
     });
 
-    // function questions(index) {
-    //   if (fetchQuestions.isLoading) return <h1>Loading...</h1>
-    //   if (fetchQuestions.isError) return <h1>Error fetching...</h1>
+    // function answerCheck() {
+    //   const payload2 = {
+    //     type: 2, // prompt type
+    //     content: TextID, // ID of text
+    //     instruction: pass // array of question-answer pairs
+    //   };
+    //   const answerQuery = useQuery({
+    //     queryKey: ['answers'],
+    //     queryFn: async () => {
+    //       const { data } = await axios.post(`${apiAddress}`, payload2)
+    //       return data
+    //     }
+    //   });
     //   return (
-    //     <div>
-    //       {fetchQuestions.data[index-1]}
-    //     </div>
-    //   )
+    //     <>
+    //       {answerQuery.isLoading && <h1>Loading...</h1>}
+    //       {answerQuery.isError && <h1>Error</h1>}
+    //       {answerQuery.data && answerQuery.data}
+    //     </>
+    //   );
     // };
-
-
-/*     const [questions, setQuestions] = useState([]);
-    useEffect(() => {
-      const apiAddress = 'http://localhost:3001/api';
-      const payload = {
-        type: 1, // prompt type
-        content: TextID, // ID of text
-        instruction: 5 // number of questions
-      }
-      const fetchData = async () => {
-        try {
-          const response = await axios.post(`${apiAddress}`, payload)
-          let qns = response.data
-          setQuestions(qns)
-          console.log(qns)
-          
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }}
-    
-      fetchData();
-    }, []); */
-
 
 
     const containerStyle = {
@@ -185,10 +173,10 @@ const BoxComponent = () => {
           {/* questions component */}
           <React.Fragment>
             <br/>
-            <div style={{ overflow: 'auto', height: 'calc(50% - 40px)' }}>
-              {isLoading && <h1>Loading...</h1>}
-              {isError && <h1>Error</h1>}
-              {data && data[currentPage - 1]}
+            <div style={{ whiteSpace: 'pre-line', overflow: 'auto', height: 'calc(50% - 40px)'}}>
+              {questionQuery.isLoading && <h1>Loading...</h1>}
+              {questionQuery.isError && <h1>Error</h1>}
+              {questionQuery.data && questionQuery.data[currentPage - 1]}
             </div>
             <div style={{ overflow: 'auto', height: 'calc(50% - 50px)', display: 'flex', alignItems: 'center' }}>
               <input

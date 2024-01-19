@@ -166,7 +166,6 @@ async function run(type, instruction, content, temperatureV, topPV, topKV) {
     const tmp1 = await result.response;
     const tmp2 = await tmp1.text();
     const output = await format(type, tmp2);
-    console.log(typeof(output))
     console.log(output)
     return await output;
 }

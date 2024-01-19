@@ -25,13 +25,13 @@ app.post('/api', (req, res) => {
   
   // prep data
   console.log('API TRIGGERED');
-  const text = eval(`text${req.body.content}`);
+  const content = eval(`text${req.body.content}`);
   const type = req.body.type;
   const instruction = req.body.instruction;
   var output;
 
   // Gemini API call
-  gen.caller(type, instruction, text )
+  gen.caller(type, instruction, content )
   .then((res) => {
     output = res
   })
