@@ -15,14 +15,19 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "@firebase/auth";
 import { auth } from "../firebase/FirebaseConfig";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Example() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const login = async () => {
+  const navigate = useNavigate();
+  const login = async (event) => {
+    event.preventDefault();
     try{
       const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       console.log(user);
+      navigate('/homepage');
     } catch(error) {
       console.log(error.message);
   }
