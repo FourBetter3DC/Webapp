@@ -6,10 +6,10 @@ const TextToSpeechPlayer = () => {
   useEffect(() => {
     const fetchAndPlayAudio = async () => {
       try {
-        const apiUrl = 'https://your-google-tts-api-endpoint.com';
+        const apiUrl = 'https://FourBetter-tts-api-endpoint.com';
 
         // The text to synthesize
-        const text = 'hello, world!';
+        const text = wordtext;
 
         // Construct the request
         const request = {
@@ -52,7 +52,7 @@ const TextToSpeechPlayer = () => {
 
   return (
     <div>
-      <p>Your Text-to-Speech Player Component</p>
+      <p>Text-to-Speech Player Component</p>
       {audioBuffer && (
         <button onClick={() => {
           // Create a buffer source node
